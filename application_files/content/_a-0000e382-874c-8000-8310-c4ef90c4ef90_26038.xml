@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_28339</versionUuid>
+    <rule>
+        <name>CC_AnagraphicalData</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26038</uuid>
+        <description>Part of the interface with the anagraphical data of the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Title",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.title,
+              saveInto: ri!communication.title
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Name",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.name,
+              saveInto:  ri!communication.name
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Address",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.address,
+              saveInto: ri!communication.address
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Email",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.email,
+              saveInto: ri!communication.email
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Surname",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.surname,
+              saveInto: ri!communication.surname
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Phone",
+              labelPosition: "ADJACENT",
+              readOnly: ri!readonly,
+              value: ri!communication.phone,
+              saveInto: ri!communication.phone
+            )
+          }
+        )
+      }
+    )</definition>
+        <namedTypedValue>
+            <name>readonly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_28339"/>
+    </history>
+</contentHaul>

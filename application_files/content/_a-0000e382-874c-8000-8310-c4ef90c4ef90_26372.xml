@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29126</versionUuid>
+    <rule>
+        <name>CC_ReviewCase</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26372</uuid>
+        <description>Process model for the review of an answer of a case</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!answerType,
+  #"SYSTEM_SYSRULES_formLayout_v1"(
+    label: "Case Answer Review",
+    contents: {
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Anagraphical Data",
+        contents: {
+          #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26038"(
+            true,
+            ri!communication
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Technical Data",
+        contents: {
+          #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26050"(
+            true,
+            ri!communication
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Case Data",
+        contents: {
+          #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26062"(
+            true,
+            ri!communication
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Answer",
+        contents: {
+          #"SYSTEM_SYSRULES_columnsLayout"(
+            columns: {
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_radioButtonField"(
+                    label: "Will be a standard answer?",
+                    labelPosition: "ABOVE",
+                    choiceLabels: {
+                      "Yes",
+                      "No"
+                    },
+                    choiceValues: {
+                      true,
+                      false
+                    },
+                    value: ri!standard,
+                    saveInto: ri!standard,
+                    required: true,
+                    choiceLayout: "STACKED",
+                    validations: {}
+                  ),
+                  #"SYSTEM_SYSRULES_integerField"(
+                    label: "Award",
+                    labelPosition: "ABOVE",
+                    value: ri!communication.communicationCase.award,
+                    saveInto: ri!communication.communicationCase.award,
+                    refreshAfter: "UNFOCUS",
+                    readOnly: ri!readOnly,
+                    validations: {}
+                  )
+                },
+                width: "NARROW"
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_paragraphField"(
+                    label: "Custom Answer",
+                    labelPosition: "ABOVE",
+                    value: ri!communication.communicationCase.answer,
+                    saveInto: ri!communication.communicationCase.answer,
+                    refreshAfter: "UNFOCUS",
+                    required: true,
+                    height: "MEDIUM",
+                    validations: {}
+                  )
+                }
+              )
+            }
+          )
+        }
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Complete ",
+          confirmMessage: "",
+          submit: true,
+          style: "PRIMARY"          
+        )
+      },
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          submit: true,
+          style: "NORMAL",
+          validate: false
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>standard</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29126"/>
+    </history>
+</contentHaul>

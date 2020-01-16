@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29166</versionUuid>
+    <rule>
+        <name>CC_AnswerData</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_27682</uuid>
+        <description>Part of the interface with the Answer data of the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_columnsLayout"(
+  columns: {
+    #"SYSTEM_SYSRULES_columnLayout"(
+      contents: {
+        #"SYSTEM_SYSRULES_integerField"(
+          label: "Award",
+          labelPosition: "ABOVE",
+          value: ri!communication.communicationCase.award,
+          saveInto: ri!communication.communicationCase.award,
+          readOnly: ri!readonly,
+          refreshAfter: "UNFOCUS",
+          validations: {}
+        )
+      },
+      width: "NARROW"
+    ),
+    #"SYSTEM_SYSRULES_columnLayout"(
+      contents: {
+        #"SYSTEM_SYSRULES_paragraphField"(
+          label: "Answer",
+          labelPosition: "ABOVE",
+          value: ri!communication.communicationCase.answer,
+          saveInto: {
+            ri!communication.communicationCase.answer
+          },
+          refreshAfter: "UNFOCUS",
+          height: "MEDIUM",
+          readOnly: ri!readonly
+        )
+      }
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>readonly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29166"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29583</versionUuid>
+    <constant>
+        <name>CC_FEDERAL_AGENCIES</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29552</uuid>
+        <description>List of the federal agencies</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25833</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Executive Office of the President</el>
+                <el>Department of Agriculture (USDA)</el>
+                <el>Department of Commerce</el>
+                <el>Department of Defense (DOD)</el>
+                <el>Department of Education</el>
+                <el>Department of Energy</el>
+                <el>Department of Health and Human Services</el>
+                <el>Department of Homeland Security</el>
+                <el>Department of Housing and Urban Development</el>
+                <el>Department of the Interior</el>
+                <el>Department of Justice</el>
+                <el>Department of Labor (DOL)</el>
+                <el>Department of State (DOS)</el>
+                <el>Department of Transportation</el>
+                <el>Department of the Treasury</el>
+                <el>Department of Veterans Affairs</el>
+                <el>Independent agencies and government-owned corporations</el>
+            </value>
+        </typedValue>
+        <isEnvironmentSpecific>false</isEnvironmentSpecific>
+    </constant>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29583"/>
+    </history>
+</contentHaul>

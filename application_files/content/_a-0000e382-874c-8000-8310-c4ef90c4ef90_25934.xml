@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26012</versionUuid>
+    <rule>
+        <name>CC_CommunicationData</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25934</uuid>
+        <description>Part of the interface with all the data of the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_sectionLayout_v1"(
+  label: "Anagraphical Data",
+  contents: {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Title",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.title
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Name",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.name
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Address",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.address
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Email",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.email
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Surname",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.surname
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Phone",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.phone
+            )
+          }
+        )
+      }
+    )
+  }
+),
+#"SYSTEM_SYSRULES_sectionLayout_v1"(
+  label: "Technical Data",
+  contents: {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Communication Method",
+              labelPosition: "ADJACENT",
+              readOnly: true,
+              value: ri!communication.communicationMethod
+            ),
+            #"SYSTEM_SYSRULES_documentDownloadLink"(
+              label: "Attachment",
+              document: ri!communication.attachmentId,
+              showWhen: not(
+                isnull(
+                  ri!communication.attachmentId
+                )
+              )
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Date of Receipts",
+              labelPosition: "ADJACENT",
+              value: ri!communication.dateOfReceipt
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_paragraphField"(
+      label: "Body",
+      labelPosition: "ADJACENT",
+      value: ri!communication.body,
+      readOnly: true
+    ),
+    
+  }
+),
+#"SYSTEM_SYSRULES_sectionLayout_v1"(
+  label: "Case Data",
+  contents: {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_dateField"(
+              label: "Created On",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.case.createdOn,
+              saveInto: ri!communication.case.createdOn,
+              showwhen: not(
+                isnull(
+                  ri!communication.case.createdOn
+                )
+              ),
+              readOnly: ri!readOnly
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Agency Name",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.case.agencyName,
+              saveInto: ri!communication.case.agencyName,
+              readOnly: ri!readOnly,
+              validations: if(
+                len(
+                  ri!communication.case.agencyName
+                ) &gt; 255,
+                "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!communication.case.agencyName
+                ) &amp; " characters.",
+                null
+              )
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Agency Email",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.case.agencyEmail,
+              saveInto: ri!communication.case.agencyEmail,
+              readOnly: ri!readOnly,
+              validations: if(
+                len(
+                  ri!communication.case.agencyEmail
+                ) &gt; 255,
+                "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!communication.case.agencyEmail
+                ) &amp; " characters.",
+                null
+              )
+            )
+          }
+        )
+      },
+      
+    )
+  }
+),</definition>
+        <namedTypedValue>
+            <name>readonly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_26012"/>
+    </history>
+</contentHaul>

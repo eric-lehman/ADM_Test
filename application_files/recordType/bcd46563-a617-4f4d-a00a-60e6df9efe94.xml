@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>b0497610-603a-443f-ae83-fffe48afa78b</versionUuid>
+  <recordType a:uuid="bcd46563-a617-4f4d-a00a-60e6df9efe94" name="CC Answer">
+    <a:pluralName>CC Answers</a:pluralName>
+    <a:description>Entity-Backed Record of the answers</a:description>
+    <a:urlStub>YJjCNw</a:urlStub>
+    <a:source
+      a:uuid="79c1e7da-5c3b-4f05-824f-8f0f1559ee7c@_a-0000e382-874c-8000-8310-c4ef90c4ef90_26289" xsi:type="a:DataStoreEntity"/>
+    <a:listViewTemplateExpr>#"SYSTEM_SYSRULES_recordGridLayoutColumns"(
+  emptygridmessage: "No Answer present yet",
+  columns: {
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Body",
+      field: "body",
+      component: #"SYSTEM_SYSRULES_recordGrid_linkField"(
+        links: #"SYSTEM_SYSRULES_recordLink"(
+          label: rf!body,
+          recordType: rp!type,
+          identifier: rp!id
+        )
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #"SYSTEM_SYSRULES_sortInfo"(
+    field: "body",
+    ascending: fn!true()
+  ),
+  shadeAlternateRows: true
+)</a:listViewTemplateExpr>
+    <a:detailViewCfg>
+      <a:nameExpr>="Summary"</a:nameExpr>
+      <a:uiExpr>#"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29181"(#"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28148"(rf!id), false, true)</a:uiExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:urlStub>summary</a:urlStub>
+      <a:headerExpr/>
+      <a:relatedActionCfg>27ec667d-8ac6-45c3-a076-53d26705cf5f</a:relatedActionCfg>
+    </a:detailViewCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="0002e38d-87ac-8000-8310-c44d98c44d98" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  answer: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28148"(rf!id), /* CC_CommunicationAnswer */
+  cancel: null, /* Boolean */
+  readOnly: null /* Boolean */
+}</a:contextExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:iconId>f022</a:iconId>
+      <a:refId>27ec667d-8ac6-45c3-a076-53d26705cf5f</a:refId>
+      <a:staticTitleString>Update Answer</a:staticTitleString>
+      <a:staticDescriptionString>Related Action for the answer update</a:staticDescriptionString>
+    </a:relatedActionCfg>
+    <a:isSystem>false</a:isSystem>
+    <a:dataSrcExpr/>
+    <a:facetsListExpr/>
+    <a:titleExpr>"Answer"</a:titleExpr>
+    <a:defaultFiltersExpr/>
+    <a:layoutType>GRID</a:layoutType>
+    <a:security>16383</a:security>
+    <a:hideLatestNews>false</a:hideLatestNews>
+    <a:isExportable>false</a:isExportable>
+    <a:listViewSrcExpr/>
+    <a:recordViewSrcExpr/>
+    <a:iconId/>
+    <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+  </recordType>
+  <roleMap>
+    <role name="record_type_administrator">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_25</groupUuid>
+      </groups>
+    </role>
+    <role name="record_type_editor">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_31</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="b0497610-603a-443f-ae83-fffe48afa78b"/>
+  </history>
+  <migrationVersion>1</migrationVersion>
+</recordTypeHaul>

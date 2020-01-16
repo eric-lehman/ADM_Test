@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_31235</versionUuid>
+    <rule>
+        <name>CC_AnswerCase</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26254</uuid>
+        <description>Interface for the answer of a case on the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!answerType,
+  local!selectedAnswer,
+  local!selectedRows,
+  local!tecnicalData: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26050"(
+    true,
+    ri!communication
+  ),
+  #"SYSTEM_SYSRULES_formLayout_v1"(
+    label: "Case Management",
+    contents: {
+      /*rule!CC_CommunicationData(*/
+      /*readonly: ri!readOnly,*/
+      /*communication: ri!communication*/
+      /*),*/
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Technical Data",
+        contents: {
+          local!tecnicalData
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Anagraphical Data",
+        contents: {
+          #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26038"(
+            true,
+            ri!communication
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Case Data",
+        contents: {
+          #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26062"(
+            true,
+            ri!communication
+          )
+        }
+      ),
+      #"SYSTEM_SYSRULES_sectionLayout_v1"(
+        label: "Answer",
+        contents: {
+          #"SYSTEM_SYSRULES_columnsLayout"(
+            columns: {
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_radioButtonField"(
+                    label: "Type of Answer",
+                    labelPosition: "ABOVE",
+                    choiceLabels: {
+                      "Standard",
+                      "Custom"
+                    },
+                    choiceValues: {
+                      "Standard",
+                      "Custom"
+                    },
+                    value: local!answerType,
+                    saveInto: local!answerType,
+                    required: true,
+                    choiceLayout: "STACKED",
+                    validations: {}
+                  ),
+                  #"SYSTEM_SYSRULES_integerField"(
+                    label: "Award",
+                    labelPosition: "ABOVE",
+                    value: ri!communication.communicationCase.award,
+                    saveInto: ri!communication.communicationCase.award,
+                    refreshAfter: "UNFOCUS",
+                    validations: {}
+                  )
+                },
+                width: "NARROW"
+              ),
+              #"SYSTEM_SYSRULES_columnLayout"(
+                contents: {
+                  #"SYSTEM_SYSRULES_gridField_v1"(
+                    label: "Standard Answer",
+                    labelPosition: "ABOVE",
+                    data: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26277"(),
+                    columns: {
+                      #"SYSTEM_SYSRULES_gridColumn"(
+                        label: "Grid Column",
+                        value: fv!row.body
+                      )
+                    },
+                    showwhen: local!answerType = "Standard",
+                    selectable: true,
+                    /*identifiers: rule!CC_GetStandardAnswer().identifiers,*/
+                    selectionValue: local!selectedAnswer,
+                    selectionsaveinto: {
+                      local!selectedAnswer,
+                      a!save(
+                        ri!communication.communicationCase.answer,
+                        #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28148"(
+                          fv!selectedRows[1].id
+                        ).body
+                      ),
+                      a!save(
+                        ri!communication.communicationCase.approved,
+                        true
+                      ),
+                      a!save(
+                        local!selectedRows,
+                        index(
+                          fv!selectedRows,
+                          length(
+                            fv!selectedRows
+                          ),
+                          null
+                        )
+                      ),
+                      /* We use the same method as above to limit the selection variable. */
+                      a!save(
+                        local!selectedAnswer,
+                        index(
+                          save!value,
+                          length(
+                            save!value
+                          ),
+                          null
+                        )
+                      )
+                    },
+                    selectionrequired: local!answerType = "Standard",
+                    validations: {}
+                  ),
+                  #"SYSTEM_SYSRULES_paragraphField"(
+                    label: "Custom Answer",
+                    labelPosition: "ABOVE",
+                    value: ri!communication.communicationCase.answer,
+                    saveInto: ri!communication.communicationCase.answer,
+                    refreshAfter: "UNFOCUS",
+                    showwhen: local!answerType = "Custom",
+                    required: local!answerType = "Custom",
+                    height: "MEDIUM",
+                    validations: {}
+                  )
+                }
+              )
+            }
+          )
+        }
+      )
+    },
+    buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+      primaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Complete ",
+          confirmMessage: "",
+          submit: true,
+          style: "PRIMARY",
+          saveInto: {
+            a!save(
+              ri!typeOfAnswer,
+              local!answerType
+            )
+          }
+        )
+      },
+      secondaryButtons: {
+        #"SYSTEM_SYSRULES_ButtonWidget"(
+          label: "Cancel",
+          value: true,
+          saveInto: ri!cancel,
+          submit: true,
+          style: "NORMAL",
+          validate: false
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>typeOfAnswer</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customAnswer</name>
+            <type>
+                <name>CC_CommunicationAnswer</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_31235"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e3b8-da19-8000-9ba2-011c48011c48_3925130</versionUuid>
+    <rule>
+        <name>CC_AddCommunication</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25788</uuid>
+        <description>Form used by legislative correspondent to add a new correspondence to the system</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!assignee,
+  #"SYSTEM_SYSRULES_formLayout_v1"(
+  label: "Communication",
+  contents: {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Anagraphical Data",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField"(
+                  label: "Title",
+                  labelPosition: "ABOVE",
+                  placeholderLabel: "--- Select a Value ---",
+                  choiceLabels: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25776",
+                  choiceValues: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25776",
+                  value: ri!CC_Communication.title,
+                  saveInto: ri!CC_Communication.title,
+                  required: true,
+                  validations: {}
+                ),
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Name",
+                  labelPosition: if(
+                    ri!readOnly,
+                    "ADJACENT",
+                    "ABOVE"
+                  ),
+                  value: ri!CC_Communication.name,
+                  saveInto: ri!CC_Communication.name,
+                  required: true,
+                  readOnly: ri!readOnly,
+                  validations: if(
+                    len(
+                  ri!CC_Communication.name
+                ) &gt; 255,
+                    "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!CC_Communication.name
+                ) &amp; " characters.",
+                    null
+                  )
+                ),
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Address",
+                  labelPosition: if(
+                    ri!readOnly,
+                    "ADJACENT",
+                    "ABOVE"
+                  ),
+                  value: ri!CC_Communication.address,
+                  saveInto: ri!CC_Communication.address,
+                  readOnly: ri!readOnly,
+                  validations: if(
+                    len(
+                  ri!CC_Communication.address
+                ) &gt; 255,
+                    "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!CC_Communication.address
+                ) &amp; " characters.",
+                    null
+                  )
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Email",
+                  labelPosition: if(
+                    ri!readOnly,
+                    "ADJACENT",
+                    "ABOVE"
+                  ),
+                  value: ri!CC_Communication.email,
+                  saveInto: ri!CC_Communication.email,
+                  required: ri!CC_Communication.communicationMethod = "",
+                  readOnly: ri!readOnly,
+                  validations: if(
+                    len(
+                  ri!CC_Communication.email
+                ) &gt; 100,
+                    "Value may not be longer than 100 characters. You have entered " &amp; len(
+                  ri!CC_Communication.email
+                ) &amp; " characters.",
+                    null
+                  )
+                ),
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Surname",
+                  labelPosition: if(
+                    ri!readOnly,
+                    "ADJACENT",
+                    "ABOVE"
+                  ),
+                  value: ri!CC_Communication.surname,
+                  saveInto: ri!CC_Communication.surname,
+                  required: true,
+                  readOnly: ri!readOnly,
+                  validations: if(
+                    len(
+                  ri!CC_Communication.surname
+                ) &gt; 255,
+                    "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!CC_Communication.surname
+                ) &amp; " characters.",
+                    null
+                  )
+                ),
+                #"SYSTEM_SYSRULES_textField"(
+                  label: "Phone",
+                  labelPosition: if(
+                    ri!readOnly,
+                    "ADJACENT",
+                    "ABOVE"
+                  ),
+                  value: ri!CC_Communication.phone,
+                  saveInto: ri!CC_Communication.phone,
+                  readOnly: ri!readOnly,
+                  validations: if(
+                    len(
+                  ri!CC_Communication.phone
+                ) &gt; 255,
+                    "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!CC_Communication.phone
+                ) &amp; " characters.",
+                    null
+                  )
+                )
+              }
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Technical Data",
+      contents: {
+        #"SYSTEM_SYSRULES_columnsLayout"(
+          columns: {
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dropdownField"(
+                  label: "Communication Method",
+                  labelPosition: "ABOVE",
+                  placeholderLabel: "--- Select a Value ---",
+                  choiceLabels: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25770",
+                  choiceValues: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25770",
+                  value: ri!CC_Communication.communicationMethod,
+                  saveInto: ri!CC_Communication.communicationMethod,
+                  required: true,
+                  validations: {}
+                ),
+                #"SYSTEM_SYSRULES_fileUploadField_v1"(
+                  label: "Attachment",
+                  labelPosition: "ABOVE",
+                  target: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25863",
+                  maxselections: 1,
+                  value: ri!CC_Communication.attachmentId,
+                  saveInto: ri!CC_Communication.attachmentId,
+                  showwhen: or(ri!CC_Communication.communicationMethod = "Mail", ri!CC_Communication.communicationMethod = "Email"),
+                  validations: {}
+                )
+              }
+            ),
+            #"SYSTEM_SYSRULES_columnLayout"(
+              contents: {
+                #"SYSTEM_SYSRULES_dateField"(
+                  label: "Date of Receipts",
+                  labelPosition: "ABOVE",
+                  value: ri!CC_Communication.dateOfReceipt,
+                  saveInto: gmt(ri!CC_Communication.dateOfReceipt,"GMT+1"),
+                  required: true,
+                  validations: if(
+                    ri!CC_Communication.dateOfReceipt &gt; today(),
+                    "Please set date in the past",
+                    ""
+                  )
+                )
+              }
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_paragraphField"(
+      label: "Body",
+      labelPosition: if(
+        ri!readOnly,
+        "ADJACENT",
+        "ABOVE"
+      ),
+      value: ri!CC_Communication.body,
+      saveInto: ri!CC_Communication.body,
+      required: true,
+      readOnly: ri!readOnly,
+      validations: if(
+        len(
+                  ri!CC_Communication.body
+                ) &gt; 4000,
+        "Value may not be longer than 4000 characters. You have entered " &amp; len(
+                  ri!CC_Communication.body
+                ) &amp; " characters.",
+        null
+      )
+    ),
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_radioButtonField"(
+              label: "Assign to",
+              labelPosition: "ABOVE",
+              choiceLabels: {"User", "Caseworkers Group"},
+              choiceValues: {"User", "Caseworkers Group"},
+              value: local!assignee,
+              saveInto: local!assignee,
+              required: true,
+              choiceLayout: "STACKED",
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_pickerFieldUsers"(
+              label: "User",
+              labelPosition: "ABOVE",
+              groupfilter: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29869",
+              value: ri!assignTo,
+              saveInto: ri!assignTo,
+              showWhen: local!assignee = "User",
+              required: local!assignee = "User",
+              validations: {}
+            )
+          }
+        )
+      }
+    )
+  },
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Submit",
+        saveInto: {
+          if (local!assignee = "Caseworkers Group", a!save(ri!assignTo, #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29869"),{})
+        },
+        submit: true,
+        style: "PRIMARY"
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Cancel",
+        value: true,
+        saveInto: ri!cancel,
+        submit: true,
+        style: "NORMAL",
+        validate: false
+      )
+    },
+    showWhen: or(
+      isnull(
+        ri!readOnly
+      ),
+      not(
+        ri!readOnly
+      )
+    )
+  )
+))</definition>
+        <namedTypedValue>
+            <name>CC_Communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>assignTo</name>
+            <type>
+                <name>UserOrGroup</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">'type!{urn:com:appian:types}CC_Communication'()</a:value>
+                    <a:nameRef>CC_Communication</a:nameRef>
+                    <a:id>1</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>cancel</a:nameRef>
+                    <a:id>2</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>readOnly</a:nameRef>
+                    <a:id>3</a:id>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:nameRef>assignTo</a:nameRef>
+                    <a:id>4</a:id>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_30966"/>
+        <historyInfo versionUuid="_a-0000e3b8-da19-8000-9ba2-011c48011c48_3925130"/>
+    </history>
+</contentHaul>

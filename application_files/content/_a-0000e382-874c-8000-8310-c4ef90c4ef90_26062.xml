@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29597</versionUuid>
+    <rule>
+        <name>CC_CaseData</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26062</uuid>
+        <description>Part of the interface with the Case data of the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_dateField"(
+              label: "Created On",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.communicationCase.createdOn,
+              saveInto: ri!communication.communicationCase.createdOn,
+              showwhen: not(
+                isnull(
+                  ri!communication.communicationCase.createdOn
+                )
+              ),
+              readOnly: ri!readOnly
+            ),
+            if (ri!readonly, 
+              #"SYSTEM_SYSRULES_textField"(
+                label: "Agency",
+                labelPosition: if(
+                  ri!readOnly,
+                  "ADJACENT",
+                  "ABOVE"
+                ),
+                value: ri!communication.communicationCase.agencyName,
+                saveInto: ri!communication.communicationCase.agencyName,
+                readOnly: true
+              ),
+              #"SYSTEM_SYSRULES_dropdownField"(
+                label: "Federal Agency",
+                labelPosition: "ABOVE",
+                placeholderLabel: "--- Select a Value ---",
+                choiceLabels: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29552",
+                choiceValues: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29552",
+                value: ri!communication.communicationCase.agencyName,
+                saveInto: ri!communication.communicationCase.agencyName,
+                showwhen: ri!readonly = false,
+                required: true,
+                validations: {}
+              ),),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Short Description",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.communicationCase.shortDescription,
+              saveInto: ri!communication.communicationCase.shortDescription,
+              refreshAfter: "UNFOCUS",
+              readOnly: ri!readOnly,
+              validations: {}
+            )
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Agency Resource Email",
+              labelPosition: if(
+                ri!readOnly,
+                "ADJACENT",
+                "ABOVE"
+              ),
+              value: ri!communication.communicationCase.agencyEmail,
+              saveInto: ri!communication.communicationCase.agencyEmail,
+              readOnly: ri!readOnly,
+              validations: if(
+                len(
+                  ri!communication.communicationCase.agencyEmail
+                ) &gt; 255,
+                "Value may not be longer than 255 characters. You have entered " &amp; len(
+                  ri!communication.communicationCase.agencyEmail
+                ) &amp; " characters.",
+                null
+              )
+            ),
+            #"SYSTEM_SYSRULES_pickerFieldUsers"(
+              label: "Caseworker",
+              labelPosition: "ADJACENT",
+              value: ri!communication.communicationCase.caseWorker,
+              showWhen: ri!readonly,
+              readOnly: true,
+              validations: {}
+            )
+          }
+        )
+      }
+      
+    )</definition>
+        <namedTypedValue>
+            <name>readonly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29597"/>
+    </history>
+</contentHaul>

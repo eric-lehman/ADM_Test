@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoFeedHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>91e95d70-debc-4ce0-a0dc-98f24c7897b1</versionUuid>
+    <tempoFeed>
+        <uuid>2acc0103-57d4-416a-9b7b-7f32c1a9f94f</uuid>
+        <name>CC Feed</name>
+        <description>Feed for directors</description>
+        <showInCatalog>true</showInCatalog>
+        <systemFeed>false</systemFeed>
+    </tempoFeed>
+    <roleMap>
+        <role name="administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_25</groupUuid>
+            </groups>
+        </role>
+        <role name="editor">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_31</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="91e95d70-debc-4ce0-a0dc-98f24c7897b1"/>
+    </history>
+</tempoFeedHaul>

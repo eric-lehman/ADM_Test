@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e36b-f319-8000-9ba2-011c48011c48_44228</versionUuid>
+    <rule>
+        <name>grid_test</name>
+        <uuid>_a-0000e365-b262-8000-9ba2-011c48011c48_43462</uuid>
+        <description></description>
+        <parentUuid>_a-0000e362-df5e-8000-9ba2-011c48011c48_43053</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=a!localVariables(
+  local!items: {
+    {item: "Item 1", qty: 1, unitPrice: 10},
+    {item: "Item 2", qty: 1, unitPrice: 8},
+    {item: "Item 3", qty: 1, unitPrice: 6},
+    {item: "Item 4", qty: 1, unitPrice: 4}
+  },
+  local!selected: tointeger({}),
+  #"SYSTEM_SYSRULES_gridLayout"(
+    label: "Products",
+    instructions: "Selected: " &amp; local!selected,
+    headerCells: {
+      #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Item"),
+      #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Qty", align: "RIGHT"),
+      #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Unit Price", align: "RIGHT"),
+      #"SYSTEM_SYSRULES_gridLayoutHeaderCell"(label: "Total", align: "RIGHT")
+    },
+    rows: #"SYSTEM_SYSRULES_forEach"(
+      items: local!items,
+      expression: #"SYSTEM_SYSRULES_gridRowLayout"(
+        id: fv!index,
+        contents: {
+          #"SYSTEM_SYSRULES_textField"(
+            value: fv!item.item,
+            saveInto: fv!item.item
+          ),
+          #"SYSTEM_SYSRULES_integerField"(
+            value: fv!item.qty,
+            saveInto: fv!item.qty,
+            align: "RIGHT"
+          ),
+          #"SYSTEM_SYSRULES_floatingPointField"(
+            value: fv!item.unitPrice,
+            saveInto: fv!item.unitPrice,
+            align: "RIGHT"
+          ),
+          #"SYSTEM_SYSRULES_textField"(
+            value: dollar(tointeger(fv!item.qty) * todecimal(fv!item.unitPrice)),
+            readOnly: true,
+            align: "RIGHT"
+          )
+        }
+      )  
+    ),
+    selectable: true,
+    selectionValue: local!selected,
+    selectionSaveInto: local!selected,
+    rowHeader: 1
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e36b-f319-8000-9ba2-011c48011c48_44228"/>
+    </history>
+</contentHaul>

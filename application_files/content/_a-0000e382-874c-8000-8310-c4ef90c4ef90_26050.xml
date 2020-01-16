@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_31340</versionUuid>
+    <rule>
+        <name>CC_TechnicalData</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26050</uuid>
+        <description>Part of the interface with the technical of the communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  {
+    #"SYSTEM_SYSRULES_columnsLayout"(
+      columns: {
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"SYSTEM_SYSRULES_textField"(
+              label: "ID",
+              labelPosition: "ADJACENT",
+              value: ri!communication.id,
+              readOnly: true
+            ),
+            #"SYSTEM_SYSRULES_pickerFieldUsers"(
+              label: "Corrispondent",
+              labelPosition: "ADJACENT",
+              value: ri!communication.corrispondent,
+              showWhen: ri!readonly,
+              readOnly: true,
+              validations: {}
+            ),
+            #"SYSTEM_SYSRULES_textField"(
+              label: "Communication Method",
+              labelPosition: "ADJACENT",
+              value: ri!communication.communicationMethod,
+              readOnly: true
+            ),
+            
+            if(
+              ri!readonly,
+              if (ri!communication.attachmentId &lt;&gt; "", 
+              #"SYSTEM_SYSRULES_linkField"(
+                label: "Attachment",
+                labelPosition: "ADJACENT",
+                links: {
+                  #"SYSTEM_SYSRULES_documentDownloadLink"(
+                    label:document(ri!communication.attachmentId, "name"),
+                    document: ri!communication.attachmentId
+                  )
+                }
+              ), {}),
+              #"SYSTEM_SYSRULES_fileUploadField_v1"(
+                label: "Attachment",
+                labelPosition: "ADJACENT",
+                target: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25863",
+                maxselections: 1,
+                value: ri!communication.attachmentId,
+                saveInto: ri!communication.attachmentId,
+                showwhen: if(
+                  ri!readonly,
+                  ri!communication.attachmentId &lt;&gt; "",
+                  or(
+                    ri!communication.communicationMethod = "Mail",
+                    ri!communication.communicationMethod = "Email"
+                  )
+                ),
+                validations: {},
+                disabled: ri!readonly
+              )
+            ),
+          }
+        ),
+        #"SYSTEM_SYSRULES_columnLayout"(
+          contents: {
+            #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27764"(
+              ri!communication
+            ),
+            #"SYSTEM_SYSRULES_dateField"(
+              label: "Date of Receipts",
+              labelPosition: "ADJACENT",
+              value: ri!Communication.dateOfReceipt,
+              saveInto: ri!Communication.dateOfReceipt,
+              required: not(
+                ri!readonly
+              ),
+              readOnly: ri!readonly,
+              validations: {}
+            )
+          }
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_paragraphField"(
+      label: "Body",
+      labelPosition: if(
+        ri!readOnly,
+        "ADJACENT",
+        "ABOVE"
+      ),
+      value: ri!communication.body,
+      saveInto: ri!communication.body,
+      required: not(
+        ri!readOnly
+      ),
+      readOnly: ri!readOnly,
+      validations: if(
+        len(
+          ri!communication.body
+        ) &gt; 4000,
+        "Value may not be longer than 4000 characters. You have entered " &amp; len(
+          ri!communication.body
+        ) &amp; " characters.",
+        null
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>readonly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_31340"/>
+    </history>
+</contentHaul>

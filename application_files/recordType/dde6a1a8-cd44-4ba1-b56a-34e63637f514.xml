@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>0f5d0c3a-50ea-41cc-8cc2-785b464d94b8</versionUuid>
+  <recordType a:uuid="dde6a1a8-cd44-4ba1-b56a-34e63637f514" name="CC Communications">
+    <a:pluralName>Communications</a:pluralName>
+    <a:description>Entity-Backed Record of the communications</a:description>
+    <a:urlStub>g90t9g</a:urlStub>
+    <a:source
+      a:uuid="96f60e01-5a43-4f46-8380-8e35c7aa4bad@_a-0000e382-874c-8000-8310-c4ef90c4ef90_26289" xsi:type="a:DataStoreEntity"/>
+    <a:listViewTemplateExpr>#"SYSTEM_SYSRULES_recordGridLayoutColumns"(
+  emptygridmessage: "No Communication from Constituent have been inserted yet",
+  columns: {
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "ID",
+      width: "ICON",
+      field: "id",
+      component: #"SYSTEM_SYSRULES_recordGrid_integerField"(
+        displayValue: rf!id,
+        align: "RIGHT"
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Constituent",
+      width: "DISTRIBUTE",
+      component: #"SYSTEM_SYSRULES_recordGrid_linkField"(
+        links: #"SYSTEM_SYSRULES_recordLink"(
+          label: rf!title &amp; " " &amp; rf!name &amp; " " &amp; rf!surname,
+          recordType: rp!type,
+          identifier: rp!id
+        )
+      
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Agency",
+      width: "DISTRIBUTE",
+      component: #"SYSTEM_SYSRULES_recordGrid_textField"(
+        displayvalue: rf!communicationCase.agencyName
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Object",
+      width: "DISTRIBUTE",
+      component: #"SYSTEM_SYSRULES_recordGrid_textField"(
+        displayvalue: if(
+          rf!communicationCase.shortDescription = "",
+          "",
+          if(
+            len(
+      rf!communicationCase.shortDescription
+    ) &lt;= 60,
+            rf!communicationCase.shortDescription,
+            left(
+      rf!communicationCase.shortDescription,
+      60
+    ) &amp; if(
+      left(
+        rf!communicationCase.shortDescription,
+        60
+      ) &lt;&gt; "",
+      "...",
+      ""
+    )
+          )
+        )
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Award",
+      width: "NARROW",
+      component: #"SYSTEM_SYSRULES_recordGrid_floatingPointField"(
+        displayvalue: rf!communicationCase.award,
+        align: "RIGHT"
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Date of receipt",
+      width: "DISTRIBUTE",
+      field: "dateOfReceipt",
+      align: "CENTER",
+      component: #"SYSTEM_SYSRULES_recordGrid_dateField"(
+        displayvalue: rf!dateOfReceipt
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "Status",
+      width: "NARROW",
+      component: #"SYSTEM_SYSRULES_recordGrid_textField"(
+        displayvalue: rf!status
+      
+      )
+    ),
+    #"SYSTEM_SYSRULES_gridLayoutColumn"(
+      label: "",
+      width: "NARROW",
+      weight: null,
+      component: #"SYSTEM_SYSRULES_recordGrid_richTextDisplayField"(
+        value: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27316"(
+          rf!status,
+          rf!dateOfReceipt,
+          rf!communicationCase.answer,
+          rf!communicationCase.approved
+        )
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #"SYSTEM_SYSRULES_sortInfo"(
+    field: "title",
+    ascending: fn!true()
+  ),
+  shadeAlternateRows: true,
+  spacing: "STANDARD"
+)</a:listViewTemplateExpr>
+    <a:fieldCfg name="Federal Agency">
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>EXPRESSION</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetExpr>
+#"SYSTEM_SYSRULES_recordFilterList"(
+  name: "Federal Agency",
+  options: #"SYSTEM_SYSRULES_forEach"(
+    items: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29552",
+    expression: #"SYSTEM_SYSRULES_recordFilterListOption"(
+      id: fv!index,
+      name: fv!item,
+      filter: #"SYSTEM_SYSRULES_queryFilter"(
+        field: "communicationCase.agencyName",
+        operator: "=",
+        value: fv!item
+      )
+    )
+  )  
+)</a:facetExpr>
+      <a:sortOrderIndex>0</a:sortOrderIndex>
+      <a:facetOrderIndex>0</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>true</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:fieldCfg name="Award Existance">
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>EXPRESSION</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetExpr>#"SYSTEM_SYSRULES_recordFilterList"(
+  name: "Award Existance",
+  options: #"SYSTEM_SYSRULES_forEach"(
+    items: {
+      "Yes",
+      "No"
+    },
+    expression: #"SYSTEM_SYSRULES_recordFilterListOption"(
+      id: fv!index,
+      name: fv!item,
+      filter: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+            field: "communicationCase.award",
+            operator: if (fv!item = "No", "is null", "not null")
+          )
+      }
+    )
+  )
+)</a:facetExpr>
+      <a:sortOrderIndex>1</a:sortOrderIndex>
+      <a:facetOrderIndex>1</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>true</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:fieldCfg name="Overdue">
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>EXPRESSION</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetExpr>= #"SYSTEM_SYSRULES_recordFilterList"(
+  name: "Overdue",
+  options: {
+    #"SYSTEM_SYSRULES_recordFilterListOption"(
+      id: 1,
+      name: "Yes",
+      filter: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "dateOfReceipt",
+          operator: "&lt;=",
+          value: workday(
+            today(),
+            - 3
+          )
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_recordFilterListOption"(
+      id: 2,
+      name: "No",
+      filter: {
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "status",
+          operator: "=",
+          value: "Closed"
+        ),
+        #"SYSTEM_SYSRULES_queryFilter"(
+          field: "dateOfReceipt",
+          operator: "&gt;",
+          value: workday(
+            today(),
+            - 3
+          )
+        )
+      }
+    )
+  },
+  defaultOption: "Active",
+  isVisible: true,
+  allowMultipleSelections: true
+)</a:facetExpr>
+      <a:sortOrderIndex>2</a:sortOrderIndex>
+      <a:facetOrderIndex>2</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>true</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:fieldCfg name="Status">
+      <a:isSortable>false</a:isSortable>
+      <a:isSearchable>false</a:isSearchable>
+      <a:isFacet>true</a:isFacet>
+      <a:facetType>EXPRESSION</a:facetType>
+      <a:isExclusiveFacet>true</a:isExclusiveFacet>
+      <a:facetExpr>#"SYSTEM_SYSRULES_recordFilterList"(
+  name: "Status",
+  options: #"SYSTEM_SYSRULES_forEach"(
+    items: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_25782",
+    expression: #"SYSTEM_SYSRULES_recordFilterListOption"(
+      id: fv!index,
+      name: fv!item,
+      filter: #"SYSTEM_SYSRULES_queryFilter"(
+        field: "status",
+        operator: "=",
+        value: fv!item
+      )
+    )
+  )  
+)</a:facetExpr>
+      <a:sortOrderIndex>3</a:sortOrderIndex>
+      <a:facetOrderIndex>3</a:facetOrderIndex>
+      <a:visibilityExpr/>
+      <a:defaultOptionExpr/>
+      <a:allowMultipleSelections>true</a:allowMultipleSelections>
+    </a:fieldCfg>
+    <a:detailViewCfg>
+      <a:nameExpr>="Summary"</a:nameExpr>
+      <a:uiExpr>#"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26566"(true, #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26554"(rf!id), false)</a:uiExpr>
+      <a:visibilityExpr>=true()</a:visibilityExpr>
+      <a:urlStub>summary</a:urlStub>
+      <a:headerExpr/>
+      <a:relatedActionCfg>37159c68-38f7-439c-b779-8827687d5444</a:relatedActionCfg>
+      <a:relatedActionCfg>7636c5e7-76cb-449d-b62d-96487e97cca4</a:relatedActionCfg>
+    </a:detailViewCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="0002e38b-efd5-8000-8310-c44d98c44d98" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  communication: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26554"(rf!id), /* CC_Communication */
+  readOnly: false /* Boolean */
+}</a:contextExpr>
+      <a:visibilityExpr>=or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"),
+=isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27221"))</a:visibilityExpr>
+      <a:iconId>f1c0</a:iconId>
+      <a:refId>37159c68-38f7-439c-b779-8827687d5444</a:refId>
+      <a:staticTitleString>Communication Update</a:staticTitleString>
+      <a:staticDescriptionString>Action to Update the Communication</a:staticDescriptionString>
+    </a:relatedActionCfg>
+    <a:relatedActionCfg>
+      <a:target a:uuid="0002e38d-92b9-8000-8310-c44d98c44d98" xsi:type="a:ProcessModel"/>
+      <a:contextExpr>{
+  communication: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26554"(rf!id), /* CC_Communication */
+  confirm: null /* Boolean */
+}</a:contextExpr>
+      <a:visibilityExpr>=or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"),
+=isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27221"))</a:visibilityExpr>
+      <a:iconId>f057</a:iconId>
+      <a:refId>7636c5e7-76cb-449d-b62d-96487e97cca4</a:refId>
+      <a:staticTitleString>Communication Delete</a:staticTitleString>
+      <a:staticDescriptionString>Action for the deletion of the communication</a:staticDescriptionString>
+    </a:relatedActionCfg>
+    <a:isSystem>false</a:isSystem>
+    <a:dataSrcExpr/>
+    <a:facetsListExpr/>
+    <a:titleExpr>"Constituent Communication"</a:titleExpr>
+    <a:defaultFiltersExpr/>
+    <a:layoutType>GRID</a:layoutType>
+    <a:security>16383</a:security>
+    <a:hideLatestNews>false</a:hideLatestNews>
+    <a:isExportable>false</a:isExportable>
+    <a:listViewSrcExpr/>
+    <a:recordViewSrcExpr/>
+    <a:iconId/>
+    <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+  </recordType>
+  <roleMap>
+    <role name="record_type_administrator">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_25</groupUuid>
+      </groups>
+    </role>
+    <role name="record_type_viewer">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_23</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="9f2d8012-a51a-456a-88a1-2fd44d761a27"/>
+    <historyInfo versionUuid="0f5d0c3a-50ea-41cc-8cc2-785b464d94b8"/>
+  </history>
+  <migrationVersion>1</migrationVersion>
+</recordTypeHaul>

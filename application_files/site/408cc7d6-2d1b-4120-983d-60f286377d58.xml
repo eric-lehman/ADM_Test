@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<siteHaul xmlns:a="http://www.appian.com/ae/types/2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <versionUuid>e8eda1d5-33e5-4366-abe4-92d8e887f2b9</versionUuid>
+  <site a:uuid="408cc7d6-2d1b-4120-983d-60f286377d58" name="Congressional Casework">
+    <description>App to manage communication from the constituent to federal agencies</description>
+    <urlStub>congressional-casework</urlStub>
+    <page>
+      <staticName>Communications</staticName>
+      <description/>
+      <urlStub>records</urlStub>
+      <uiObject a:uuid="dde6a1a8-cd44-4ba1-b56a-34e63637f514" xsi:type="a:RecordType">
+        <a:isSystem>false</a:isSystem>
+        <a:security>16383</a:security>
+        <a:hideLatestNews>false</a:hideLatestNews>
+        <a:isExportable>true</a:isExportable>
+        <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+      </uiObject>
+      <iconId>f00b</iconId>
+      <visibilityExpr>fn!true()</visibilityExpr>
+      <pageWidth>STANDARD</pageWidth>
+    </page>
+    <page>
+      <staticName>Communication Insertion</staticName>
+      <description/>
+      <urlStub>actions</urlStub>
+      <uiObject a:uuid="0002e388-22b7-8000-8310-c44d98c44d98" xsi:type="a:ProcessModel"/>
+      <iconId>f003</iconId>
+      <visibilityExpr>or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27221"), 
+isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"))
+</visibilityExpr>
+      <pageWidth>STANDARD</pageWidth>
+    </page>
+    <page>
+      <staticName>Answers</staticName>
+      <description/>
+      <urlStub>answers</urlStub>
+      <uiObject a:uuid="bcd46563-a617-4f4d-a00a-60e6df9efe94" xsi:type="a:RecordType">
+        <a:isSystem>false</a:isSystem>
+        <a:security>16383</a:security>
+        <a:hideLatestNews>false</a:hideLatestNews>
+        <a:isExportable>true</a:isExportable>
+        <a:listAutoRefreshInterval>0.0</a:listAutoRefreshInterval>
+      </uiObject>
+      <iconId>f03a</iconId>
+      <visibilityExpr>or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29207"), 
+isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"))</visibilityExpr>
+      <pageWidth>STANDARD</pageWidth>
+    </page>
+    <page>
+      <staticName>Add Answer</staticName>
+      <description/>
+      <urlStub>add-answer</urlStub>
+      <uiObject a:uuid="0002e38d-860f-8000-8310-c44d98c44d98" xsi:type="a:ProcessModel"/>
+      <iconId>f019</iconId>
+      <visibilityExpr>or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29207"), 
+isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"))</visibilityExpr>
+      <pageWidth>STANDARD</pageWidth>
+    </page>
+    <page>
+      <staticName>Communication Report</staticName>
+      <description/>
+      <urlStub>communication-report</urlStub>
+      <uiObject a:uuid="62db78f1-4d4e-4a5a-9a8c-c4c5b6784115" xsi:type="a:TempoReport"/>
+      <iconId>f0e8</iconId>
+      <visibilityExpr>or(isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_29207"), 
+isusermemberofgroup(loggedInUser(), #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_28282"))</visibilityExpr>
+      <pageWidth>STANDARD</pageWidth>
+    </page>
+    <visibility>268435456</visibility>
+    <headerBackgroundColor>#ffffff</headerBackgroundColor>
+    <selectedTabBackgroundColor>#a64d79</selectedTabBackgroundColor>
+    <faviconRef a:uuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_30736" xsi:type="a:CollaborationDocument"/>
+    <faviconHref/>
+    <logoRef a:uuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_30747" xsi:type="a:CollaborationDocument"/>
+    <logoHref/>
+    <headerBackgroundColorExpr/>
+    <selectedTabBackgroundColorExpr/>
+    <accentColor/>
+    <accentColorExpr/>
+    <logoExpr/>
+    <faviconExpr/>
+    <showName>false</showName>
+    <tempoLinkVisibility>HIDDEN</tempoLinkVisibility>
+    <showRecordNews>true</showRecordNews>
+    <isSystem>false</isSystem>
+  </site>
+  <roleMap>
+    <role name="site_administrator">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_25</groupUuid>
+      </groups>
+    </role>
+    <role name="site_viewer">
+      <users/>
+      <groups>
+        <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_23</groupUuid>
+      </groups>
+    </role>
+  </roleMap>
+  <history>
+    <historyInfo versionUuid="e8eda1d5-33e5-4366-abe4-92d8e887f2b9"/>
+  </history>
+</siteHaul>

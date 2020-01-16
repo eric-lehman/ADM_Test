@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_31390</versionUuid>
+    <rule>
+        <name>CC_TaskReport</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_27173</uuid>
+        <description>Interface for the tasks report</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>a!localVariables(
+  local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+    startIndex: 1,
+    batchSize: - 1
+  ),
+  local!report: a!queryProcessAnalytics(
+    report: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26604",
+    contextProcessModels: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27038",
+   ),
+   #"SYSTEM_SYSRULES_gridField_v1"(
+     label: "Openet task list",
+     data: local!report.data,
+     columns: #"SYSTEM_SYSRULES_forEach"(
+       items: local!report.columnConfigs,
+       expression: #"SYSTEM_SYSRULES_gridColumn"(
+         label: fv!item.label,
+         value: if(
+           fv!item.configuredFormatting = "TASK_STATUS",
+           index(
+             {
+               "Assigned",
+               "Accepted",
+               "Completed",
+               "Not Started",
+               "Cancelled",
+               "Paused",
+               "Unattended",
+               "Aborted",
+               "Cancelled By Exception",
+               "Submitted",
+               "Running",
+               "Error"
+             },
+             /* Task status ids start with 0, so add one to reach the first index */
+             tointeger(
+               index(
+                 fv!row,
+                 tointeger(
+                   fv!item.field
+                 ) + 1,
+                 - 1
+               )
+             ),
+             "Other"
+           ),
+           if(
+             fv!item.configuredDrilldown = "TASK_DETAILS",
+             #"SYSTEM_SYSRULES_linkField"(
+               links: #"SYSTEM_SYSRULES_processTaskLink"(
+                 label: index(
+                   fv!row,
+                   fv!item.field,
+                   {}
+                 ),
+                 task: index(
+                   fv!row,
+                   fv!item.drilldownField,
+                   {}
+                 )
+               )
+             ),
+             if(
+               fv!item.configuredFormatting = "USER_OR_GROUP_NAME",
+               if(
+                 tointeger(
+                   index(
+                     fv!row,
+                     fv!item.field,
+                     {}
+                   )
+                 ) = "",
+                 index(
+                   fv!row,
+                   fv!item.field,
+                   {}
+                 ),
+                 if (tointeger(
+                   index(
+                     fv!row,
+                     fv!item.field,
+                     {}
+                   )
+                 ) = 13,
+                 "Caseworkers", 
+                 "Directors")
+               ),
+
+               if (
+                 fv!item.configuredFormatting = "DATE_TIME",
+                 datetext(index(
+                   fv!row,
+                   fv!item.field,
+                   {}
+                 ), "MM/dd/yyyy HH:MM"),
+                 index(
+                   fv!row,
+                   fv!item.field,
+                   {}
+                 )
+               )
+             )
+           )
+         ),
+         align: if(
+           fv!item.configuredFormatting = "DATE_TIME",
+           "END",
+           "START"
+         )
+       )
+     ),
+     pageSize: 20,
+     rowHeader: 1
+   )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_30690"/>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_31390"/>
+    </history>
+</contentHaul>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_31718</versionUuid>
+    <rule>
+        <name>CC_CommunicationView</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26566</uuid>
+        <description>Read-Only display for all information about a specific communication</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25753</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#"SYSTEM_SYSRULES_formLayout_v1"(
+  label: "Communication",
+  contents: {
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Technical Data",
+      contents: {
+        #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26050"(
+          readonly: ri!readOnly,
+          communication: ri!communication
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Anagraphical Data",
+      contents: {
+        #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26038"(
+          ri!readOnly,
+          ri!communication
+        )
+      }
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Case Data",
+      contents: {
+        #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26062"(
+          ri!readOnly,
+          ri!communication
+        )
+      },
+      showWhen: not(
+        isnull(
+          ri!communication.communicationCase
+        )
+      )
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Answer Data",
+      contents: {
+        #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27682"(
+          true,
+          ri!communication
+        )
+      },
+      showWhen: not(
+        isnull(
+          ri!communication.communicationCase.answer
+        )
+      )
+    ),
+    #"SYSTEM_SYSRULES_sectionLayout_v1"(
+      label: "Opened Task",
+      contents: {
+        a!localVariables(
+          local!pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+            startIndex: 1,
+            batchSize: - 1
+          ),
+          local!report: a!queryProcessAnalytics(
+            report: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_26604",
+            contextProcessModels: #"_a-0000e382-874c-8000-8310-c4ef90c4ef90_27038",
+            query: if(
+              ri!communication.id &lt;&gt; "",
+              #"SYSTEM_SYSRULES_query"(
+                pagingInfo: #"SYSTEM_SYSRULES_pagingInfo"(
+                  startIndex: 1,
+                  batchSize: 20
+                ),
+                logicalExpression: #"SYSTEM_SYSRULES_queryLogicalExpression"(
+                  operator: "AND",
+                  filters: {
+                    #"SYSTEM_SYSRULES_queryFilter"(
+                      field: "c4",
+                      operator: "=",
+                      value: ri!communication.id
+                    )
+                  }
+                )
+              ),
+              {}
+            )
+          ),
+          #"SYSTEM_SYSRULES_gridField_v1"(
+            data: local!report.data,
+            columns: #"SYSTEM_SYSRULES_forEach"(
+              items: local!report.columnConfigs,
+              expression: #"SYSTEM_SYSRULES_gridColumn"(
+                label: fv!item.label,
+                value: if(
+                  fv!item.configuredFormatting = "TASK_STATUS",
+                  index(
+                    {
+                      "Assigned",
+                      "Accepted",
+                      "Completed",
+                      "Not Started",
+                      "Cancelled",
+                      "Paused",
+                      "Unattended",
+                      "Aborted",
+                      "Cancelled By Exception",
+                      "Submitted",
+                      "Running",
+                      "Error"
+                    },
+                    /* Task status ids start with 0, so add one to reach the first index */
+                    tointeger(
+                      index(
+                        fv!row,
+                        tointeger(
+                          fv!item.field
+                        ) + 1,
+                        - 1
+                      )
+                    ),
+                    "Other"
+                  ),
+                  if(
+                    fv!item.configuredDrilldown = "TASK_DETAILS",
+                    #"SYSTEM_SYSRULES_linkField"(
+                      links: #"SYSTEM_SYSRULES_processTaskLink"(
+                        label: index(
+                          fv!row,
+                          fv!item.field,
+                          {}
+                        ),
+                        task: index(
+                          fv!row,
+                          fv!item.drilldownField,
+                          {}
+                        )
+                      )
+                    ),
+                    if(
+                      fv!item.configuredFormatting = "USER_OR_GROUP_NAME",
+                      #"SYSTEM_SYSRULES_forEach"(
+                        items:
+                          index(
+                            fv!row,
+                            fv!item.field,
+                            {}
+                          
+                        ),
+                        expression: 
+                                  if (
+                                    typeof(fv!item)= 5,
+                                    group(togroup(fv!item), "groupName"),
+                                    if (typeof(fv!item) = 4, 
+                                      touser(fv!item),
+                                      fv!item
+                                    )
+                                  )
+                                    
+                      ),
+                      if(
+                        fv!item.configuredFormatting = "DATE_TIME",
+                        datetext(
+                          index(
+                            fv!row,
+                            fv!item.field,
+                            {}
+                          ),
+                          "MM/dd/yyyy HH:MM"
+                        ),
+                        index(
+                          fv!row,
+                          fv!item.field,
+                          {}
+                        )
+                      )
+                    )
+                  )
+                ),
+                align: if(
+                  fv!item.configuredFormatting = "DATE_TIME",
+                  "END",
+                  "START"
+                )
+              )
+            ),
+            pageSize: 10,
+            rowHeader: 1
+          )
+        )
+      },
+      showWhen: ri!communication.status &lt;&gt; "Closed"
+    )
+  },
+  buttons: #"SYSTEM_SYSRULES_ButtonLayout"(
+    primaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Submit",
+        submit: true,
+        style: "PRIMARY"
+      )
+    },
+    secondaryButtons: {
+      #"SYSTEM_SYSRULES_ButtonWidget"(
+        label: "Cancel",
+        value: true,
+        saveInto: ri!cancel,
+        submit: true,
+        style: "NORMAL",
+        validate: false
+      )
+    },
+    showWhen: or(
+      isnull(
+        ri!readOnly
+      ),
+      not(
+        ri!readOnly
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>readOnly</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>communication</name>
+            <type>
+                <name>CC_Communication</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_30804"/>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_31718"/>
+    </history>
+</contentHaul>

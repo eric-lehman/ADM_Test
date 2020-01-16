@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29804</versionUuid>
+    <rule>
+        <name>CC_GetIconFromStatus</name>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_27316</uuid>
+        <description>Get the right icon depending on communication status</description>
+        <parentUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_25759</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!fixedDate: if(
+    ri!dateOfReceipt = todate(
+      null
+    ),
+    today(),
+    ri!dateOfReceipt
+  ),
+  local!delay: local!fixedDate &lt;= workday(today(), -3),
+  local!icon: #"af562062-7582-466d-b681-9eba123d059d"(
+    status: ri!status
+  ),
+  #"SYSTEM_SYSRULES_richTextIcon"(
+    icon: if(
+      ri!status = "Closed",
+      local!icon.output,
+      if(
+        local!delay,
+        "calendar-times-o",
+        local!icon.output
+      )
+    ),
+    color: if(
+      ri!status = "Closed",
+      local!icon.color,
+      if(
+        local!delay,
+        "#ff2200",
+        local!icon.color
+      )
+    ),
+    size: "LARGE"
+  )
+)</definition>
+        <namedTypedValue>
+            <name>status</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>dateOfReceipt</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>answer</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>approved</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role inherit="true" allowForAll="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="true" allowForAll="false" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29804"/>
+    </history>
+</contentHaul>

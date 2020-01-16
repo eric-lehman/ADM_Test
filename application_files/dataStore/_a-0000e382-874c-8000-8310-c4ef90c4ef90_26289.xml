@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <versionUuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_29287</versionUuid>
+    <dataStore>
+        <uuid>_a-0000e382-874c-8000-8310-c4ef90c4ef90_26289</uuid>
+        <name>CC DS</name>
+        <description>Datastore for CC App</description>
+        <dataSourceKey>jdbc/AppianDS</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <autoUpdateSchema>true</autoUpdateSchema>
+        <entities>
+            <entity>
+                <uuid>79c1e7da-5c3b-4f05-824f-8f0f1559ee7c</uuid>
+                <name>answer</name>
+                <type>{urn:com:appian:types}CC_CommunicationAnswer</type>
+            </entity>
+            <entity>
+                <uuid>96f60e01-5a43-4f46-8380-8e35c7aa4bad</uuid>
+                <name>communication</name>
+                <type>{urn:com:appian:types}CC_Communication</type>
+            </entity>
+            <entity>
+                <uuid>112089bc-5a7a-4dcd-95b9-e682a7cf2b4a</uuid>
+                <name>communicationCase</name>
+                <type>{urn:com:appian:types}CC_CommunicationCase</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>false</isPublished>
+    <roleMap>
+        <role inherit="false" allowForAll="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_25</groupUuid>
+            </groups>
+        </role>
+        <role inherit="false" allowForAll="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role inherit="false" allowForAll="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000e382-874c-8000-8310-c41e94c41e94_23</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+    <history>
+        <historyInfo versionUuid="_a-0000e382-874c-8000-8310-c4ef90c4ef90_29287"/>
+    </history>
+</dataStoreHaul>
